@@ -5,9 +5,6 @@ using WebApi.Models;
 using System.Web.Http.Description;
 using System.Linq;
 using WebApi.Contracts;
-using System;
-using System.Net.Http;
-using System.Web.Http;
 
 namespace WebApi.Controllers
 {
@@ -25,20 +22,10 @@ namespace WebApi.Controllers
             return Ok(_repository.AllEmployees.ToList());
         }
 
-        //[ResponseType(typeof(Employee))]
-        public HttpResponseMessage GetById(int id)
+        [ResponseType(typeof(Employee))]
+        public IHttpActionResult GetById(int id)
         {
-            // return Ok(_repository.AllEmployees.ToList().Where(p => p.Id == id));
-
-            var entity = _repository.Find(id);// (e => e.id_client == id);
-            if (entity == null)
-            {
-                return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Customer with id=" + id.ToString() + " not found");
-            }
-            else
-            {
-                return Request.CreateResponse(HttpStatusCode.OK, entity);
-            }
+            return Ok(_repository.AllEmployees.ToList().Where(p => p.Id == id));
 
         }
 

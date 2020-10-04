@@ -26,17 +26,8 @@ namespace WebApi.Controllers
         [ResponseType(typeof(Company))]
         public IHttpActionResult GetById(int id)
         {
-            try
-            {
                 var rep = _repository.Find(id);
-                return Ok(rep);
-            }
-            catch(Exception ex)
-            {
-                return NotFound();
-            }
-            
-
+                return Ok(rep);         
         }
 
         [ResponseType(typeof(Company))]

@@ -18,6 +18,8 @@ namespace WebApi.Models
         public ApplicationDBEntities()
             : base("name=ApplicationDBEntities")
         {
+            this.Configuration.LazyLoadingEnabled = false;
+            this.Configuration.ProxyCreationEnabled = false;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
