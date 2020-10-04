@@ -91,13 +91,16 @@
       <Name>Contract</Name>
     </ProjectReference>
     <ProjectReference Include="..\WebApi\WebApi.csproj">
-      <Project>{3648DFDC-A5C4-4A6D-8D55-9EAE7CF5903C}</Project>
+      <Project>{7c51cd38-3e65-4521-a4c9-1d3175b1fdd9}</Project>
       <Name>WebApi</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

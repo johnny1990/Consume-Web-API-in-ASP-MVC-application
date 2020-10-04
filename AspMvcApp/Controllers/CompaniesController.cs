@@ -17,7 +17,7 @@ namespace AspMvcApp.Controllers
     {
         HttpClient client;
         //The URL of the WEB API Service
-        string url = "https://localhost:44365/api/CompaniesAPI";
+        string url = "http://localhost:57000/api/CompaniesAPI";
 
         //The HttpClient Class, this will be used for performing 
         //HTTP Operations, GET, POST, PUT, DELETE

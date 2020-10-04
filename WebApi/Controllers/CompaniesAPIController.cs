@@ -15,13 +15,18 @@ namespace WebApi.Controllers
         {
             _repository = r;
         }
+        public CompaniesAPIController()
+        {
+
+        }
+
         public IEnumerable<Company> Get()
         {
             return _repository.GetEmp();
         }
 
         [ResponseType(typeof(Company))]
-        public IHttpActionResult Get(int id)
+        public IHttpActionResult GetById(int id)
         {
             return Ok(_repository.GetEmp(id));
         }

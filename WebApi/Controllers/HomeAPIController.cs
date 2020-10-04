@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Collections.Generic;
+using System.Net;
+using System.Web.Http;
+using WebApi.Models;
+using System.Web.Http.Description;
+using Contract;
 
 namespace WebApi.Controllers
 {
-    public class HomeAPIController : Controller
+    public class HomeAPIController : ApiController
     {
-        public ActionResult Index()
-        {
-            ViewBag.Title = "Home Page";
-
-            return View();
-        }
+       
     }
 }
