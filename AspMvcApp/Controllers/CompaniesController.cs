@@ -55,7 +55,7 @@ namespace AspMvcApp.Controllers
         public async Task<ActionResult> Create(Company comp)
         {
 
-            HttpResponseMessage responseMessage = null;// await client.PostAsJsonAsync(url, comp);
+            HttpResponseMessage responseMessage = await client.PostAsJsonAsync(url, comp);
             if (responseMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index");
@@ -79,10 +79,10 @@ namespace AspMvcApp.Controllers
 
         //The PUT Method
         [HttpPost]
-        public async Task<ActionResult> Edit(int id, Company comp)
+        public async Task<ActionResult> Edit(Company comp)//(int id, Company comp)
         {
 
-            HttpResponseMessage responseMessage = null;// await client.PutAsJsonAsync(url + "/" + id, comp);
+            HttpResponseMessage responseMessage = await client.PutAsJsonAsync(url + "/", comp); //await client.PutAsJsonAsync(url + "/" + id, comp);
             if (responseMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index");

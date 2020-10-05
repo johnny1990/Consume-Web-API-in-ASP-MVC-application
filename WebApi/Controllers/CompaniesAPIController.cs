@@ -34,6 +34,7 @@ namespace WebApi.Controllers
         public IHttpActionResult Post(Company comp)
         {
             _repository.Insert(comp);
+            _repository.Save();
             return Ok(comp);
         }
 
@@ -41,6 +42,7 @@ namespace WebApi.Controllers
         public IHttpActionResult Put(Company comp)
         {
             _repository.Update(comp);
+            _repository.Save();
             return StatusCode(HttpStatusCode.NoContent);
         }
 
@@ -48,6 +50,7 @@ namespace WebApi.Controllers
         public IHttpActionResult Delete(int id)
         {
             _repository.Delete(id);
+            _repository.Save();
             return StatusCode(HttpStatusCode.NoContent);
         }
     }

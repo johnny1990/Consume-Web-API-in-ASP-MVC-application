@@ -25,14 +25,15 @@ namespace WebApi.Controllers
         [ResponseType(typeof(Employee))]
         public IHttpActionResult GetById(int id)
         {
-            return Ok(_repository.AllEmployees.ToList().Where(p => p.Id == id));
-
+            var rep = _repository.Find(id);
+            return Ok(rep);
         }
 
         [ResponseType(typeof(Employee))]
         public IHttpActionResult Post(Employee emp)
         {
             _repository.Insert(emp);
+            _repository.Save();
             return Ok(emp);
         }
 
@@ -40,6 +41,7 @@ namespace WebApi.Controllers
         public IHttpActionResult Put(Employee emp)
         {
             _repository.Update(emp);
+            _repository.Save();
             return StatusCode(HttpStatusCode.NoContent);
         }
 
@@ -47,6 +49,7 @@ namespace WebApi.Controllers
         public IHttpActionResult Delete(int id)
         {
             _repository.Delete(id);
+            _repository.Save();
             return StatusCode(HttpStatusCode.NoContent);
         }
     }
