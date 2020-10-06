@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using WebApi.Models;
+using WebApi.Contracts;
 
 namespace AspMvcApp.Controllers
 {   /*[Authorize]*/
@@ -44,8 +45,22 @@ namespace AspMvcApp.Controllers
             return View("Error");
         }
 
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
+            HttpResponseMessage responseMessage = await client.GetAsync(url);
+            var responseData = responseMessage.Content.ReadAsStringAsync().Result;
+            var Employees = JsonConvert.DeserializeObject<List<Employee>>(responseData);
+
+            List<int?> compIds = new List<int?>();
+
+            foreach(var item in Employees)
+            {
+                compIds.Add(item.CompanyId);
+            }
+
+            var distincts = compIds.Distinct();
+
+            ViewBag.CompanyId = new SelectList(distincts.ToList(), "", "");
             return View(new Employee());
         }
 
@@ -71,8 +86,23 @@ namespace AspMvcApp.Controllers
 
                 var Employee = JsonConvert.DeserializeObject<Employee>(responseData);
 
+                #region DropDownCategoryId
+                HttpResponseMessage responseMessage2 = await client.GetAsync(url);
+                var responseData2 = responseMessage2.Content.ReadAsStringAsync().Result;
+                var Employees = JsonConvert.DeserializeObject<List<Employee>>(responseData2);
+                List<int?> compIds = new List<int?>();
+
+                foreach (var item in Employees)
+                {
+                    compIds.Add(item.CompanyId);
+                }
+
+                var distincts = compIds.Distinct();
+                ViewBag.CompanyId = new SelectList(distincts.ToList(), "", "");
+                #endregion
+
                 return View(Employee);
-            }
+            }           
             return View("Error");
         }
 
