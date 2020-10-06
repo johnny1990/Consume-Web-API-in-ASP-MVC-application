@@ -15,7 +15,8 @@ namespace AspMvcApp.Controllers
     //[Authorize]
     public class CompaniesController : Controller
     {
-        HttpClient client;
+        ApplicationDBEntities db = new ApplicationDBEntities();
+           HttpClient client;
         //The URL of the WEB API Service
         string url = "http://localhost:57000/api/CompaniesAPI";
 
@@ -45,8 +46,23 @@ namespace AspMvcApp.Controllers
             return View("Error");
         }
 
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
+            HttpResponseMessage responseMessage = await client.GetAsync(url);
+            var responseData = responseMessage.Content.ReadAsStringAsync().Result;
+            var Companies = JsonConvert.DeserializeObject<List<User>>(responseData);
+
+            List<int?> userIds = new List<int?>();
+
+            foreach (var item in Companies)
+            {
+                userIds.Add(item.Id);
+            }
+
+            var distincts = userIds.Distinct();
+
+            ViewBag.UserId = new SelectList(distincts.ToList(), "", "");
+
             return View(new Company());
         }
 
@@ -72,6 +88,21 @@ namespace AspMvcApp.Controllers
 
                 var comp = JsonConvert.DeserializeObject<Company>(responseData);
 
+                #region DropDownCategoryId
+                HttpResponseMessage responseMessage2 = await client.GetAsync(url);
+                var responseData2 = responseMessage2.Content.ReadAsStringAsync().Result;
+                var Companies = JsonConvert.DeserializeObject<List<User>>(responseData2);
+                List<int?> userIds = new List<int?>();
+
+                foreach (var item in Companies)
+                {
+                    userIds.Add(item.Id);
+                }
+
+                var distincts = userIds.Distinct();
+                ViewBag.UserId = new SelectList(distincts.ToList(), "", "");
+                #endregion
+
                 return View(comp);
             }
             return View("Error");
@@ -79,10 +110,9 @@ namespace AspMvcApp.Controllers
 
         //The PUT Method
         [HttpPost]
-        public async Task<ActionResult> Edit(Company comp)//(int id, Company comp)
+        public async Task<ActionResult> Edit(Company comp)
         {
-
-            HttpResponseMessage responseMessage = await client.PutAsJsonAsync(url + "/", comp); //await client.PutAsJsonAsync(url + "/" + id, comp);
+            HttpResponseMessage responseMessage = await client.PutAsJsonAsync(url + "/", comp); 
             if (responseMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index");
