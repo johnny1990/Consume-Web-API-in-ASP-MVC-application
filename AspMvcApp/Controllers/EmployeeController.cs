@@ -49,13 +49,13 @@ namespace AspMvcApp.Controllers
         {
             HttpResponseMessage responseMessage = await client.GetAsync(url);
             var responseData = responseMessage.Content.ReadAsStringAsync().Result;
-            var Employees = JsonConvert.DeserializeObject<List<Company>>(responseData);
+            var Employees = JsonConvert.DeserializeObject<List<Employee>>(responseData);
 
             List<int?> compIds = new List<int?>();
 
             foreach(var item in Employees)
             {
-                compIds.Add(item.Id);
+                compIds.Add(item.CompanyId);
             }
 
             var distincts = compIds.Distinct();
@@ -89,12 +89,12 @@ namespace AspMvcApp.Controllers
                 #region DropDownCategoryId
                 HttpResponseMessage responseMessage2 = await client.GetAsync(url);
                 var responseData2 = responseMessage2.Content.ReadAsStringAsync().Result;
-                var Employees = JsonConvert.DeserializeObject<List<Company>>(responseData2);
+                var Employees = JsonConvert.DeserializeObject<List<Employee>>(responseData2);
                 List<int?> compIds = new List<int?>();
 
                 foreach (var item in Employees)
                 {
-                    compIds.Add(item.Id);
+                    compIds.Add(item.CompanyId);
                 }
 
                 var distincts = compIds.Distinct();
