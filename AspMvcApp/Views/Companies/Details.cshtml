@@ -1,0 +1,94 @@
+﻿@model WebApi.Models.Company
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Companies</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+    </dl>
+</div>
+
+<h2 class="text-center">Employees(Master-Detail)</h2>
+<table class="table">
+    <tr>
+        <th>
+            Id
+        </th>
+        <th>
+            FirstName
+        </th>
+        <th>
+            LastName
+        </th>
+        <th>
+            Serial
+        </th>
+        <th>
+            CompanyId
+        </th>
+        <th></th>
+    </tr>
+
+        @foreach (var item in ViewBag.Employees)
+        {
+            <tr>
+                <td>
+                    <input type="text" id="Id" name="Id" placeholder="Id" readonly="readonly" border="0"
+                      value="@(item.Id)" }>
+                </td>
+                <td>      
+                     <input type="text" id="FirstName" name="FirstName" placeholder="FirstName" readonly="readonly" border="0"
+                     value="@(item.FirstName)" }>
+               </td>
+                <td>
+                    <input type="text" id="LastName" name="LastName" placeholder="LastName" readonly="readonly" border="0"
+                           value="@(item.LastName)" }>
+                </td>
+                <td>
+                    <input type="text" id="Serial" name="Serial" placeholder="Serial" readonly="readonly" border="0"
+                           value="@(item.Serial)" }>
+                </td>
+                <td>
+                    <input type="text" id="CompanyId" name="CompanyId" placeholder="CompanyId" readonly="readonly" border="0"
+                           value="@(item.CompanyId)" }>
+                </td>
+                <td>
+                      @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                      @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                </td>
+                </tr>
+        }
+</table>
+
+
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

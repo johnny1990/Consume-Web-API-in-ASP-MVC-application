@@ -17,9 +17,10 @@ namespace AspMvcApp.Controllers
     {
         ApplicationDBEntities db = new ApplicationDBEntities();
            HttpClient client;
+        HttpClient client2;
         //The URL of the WEB API Service
         string url = "http://localhost:57000/api/CompaniesAPI";
-
+        string url2 = "http://localhost:57000/api/EmployeeAPI";
         //The HttpClient Class, this will be used for performing 
         //HTTP Operations, GET, POST, PUT, DELETE
         //Set the base address and the Header Formatter
@@ -29,6 +30,11 @@ namespace AspMvcApp.Controllers
             client.BaseAddress = new Uri(url);
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            client2 = new HttpClient();
+            client2.BaseAddress = new Uri(url2);
+            client2.DefaultRequestHeaders.Accept.Clear();
+            client2.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
         // GET: CompaniesInfo
@@ -45,6 +51,26 @@ namespace AspMvcApp.Controllers
             }
             return View("Error");
         }
+
+        public async Task<ActionResult> Details(int id)
+        {
+            HttpResponseMessage responseMessage = await client.GetAsync(url + "/" + id);
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                var responseData = responseMessage.Content.ReadAsStringAsync().Result;
+                var comp = JsonConvert.DeserializeObject<Company>(responseData);
+
+                #region md
+                HttpResponseMessage responseMessageEmp = await client2.GetAsync(url2);
+                var responseDataEmp = responseMessageEmp.Content.ReadAsStringAsync().Result;
+                var Employees = JsonConvert.DeserializeObject<List<Employee>>(responseDataEmp);
+                ViewBag.Employees = Employees.ToList().Where(p => p.CompanyId == id);
+                #endregion
+                return View(comp);
+            }
+            return View("Error");        
+        }
+
 
         public async Task<ActionResult> Create()
         {
