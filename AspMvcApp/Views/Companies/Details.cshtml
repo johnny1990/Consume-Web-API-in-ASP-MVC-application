@@ -80,8 +80,8 @@
                            value="@(item.CompanyId)" }>
                 </td>
                 <td>
-                      @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                      @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                    @Html.ActionLink("Edit", "Edit", "Employee", new { id = item.Id }, new { @class = "btn btn-default" })|
+                    @Html.ActionLink("Delete", "Delete", "Employee", new { id = item.Id },  new { @class = "btn btn-default" })
                 </td>
                 </tr>
         }
